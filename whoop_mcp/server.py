@@ -87,7 +87,7 @@ def whoop_recoveries(limit: int = 10, max_pages: int = 5) -> str:
 @mcp.tool()
 def whoop_sleeps(limit: int = 10, max_pages: int = 5) -> str:
     """Sleep records: performance, consistency, stage breakdown (REM/deep/light/awake), respiratory rate."""
-    return _guard(client.paginate, "/sleep", {"limit": min(limit, 25)}, max_pages)
+    return _guard(client.paginate, "/activity/sleep", {"limit": min(limit, 25)}, max_pages)
 
 
 @mcp.tool()
@@ -119,7 +119,7 @@ def whoop_daily_summary(days: int = 1) -> str:
         start = datetime.fromtimestamp(_t.time() - days * 86400, timezone.utc).isoformat()
         cycles = client.paginate("/cycle", {"limit": 25, "start": start}, 3)
         recs = client.paginate("/recovery", {"limit": 25, "start": start}, 3)
-        sleeps = client.paginate("/sleep", {"limit": 25, "start": start}, 3)
+        sleeps = client.paginate("/activity/sleep", {"limit": 25, "start": start}, 3)
 
         def day_of(iso):
             return (iso or "")[:10]
