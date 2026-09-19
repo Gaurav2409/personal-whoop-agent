@@ -73,15 +73,47 @@ def whoop_cycles(limit: int = 10, max_pages: int = 5) -> str:
 
 
 @mcp.tool()
+def whoop_collection(scope: str, limit: int = 25, start: str = "", end: str = "", max_pages: int = 20) -> str:
+    """Generic paginated collection fetch with date filters (ISO 8601).
+    scope: one of "cycles", "recoveries", "sleeps", "workouts".
+    start: only items at/after this ISO time; end: items before this ISO time."""
+    paths = {"cycles": "/cycle", "recoveries": "/recovery",
+             "sleeps": "/activity/sleep", "workouts": "/activity/workout"}
+    params = {"limit": min(limit, 25)}
+    if start:
+        params["start"] = start
+    if end:
+        params["end"] = end
+    return _guard(client.paginate, paths[scope], params, max_pages)
+
+
+@mcp.tool()
 def whoop_cycle_by_id(cycle_id: int) -> str:
     """One cycle by numeric ID."""
     return _guard(client._get, f"/cycle/{cycle_id}")
 
 
 @mcp.tool()
-def whoop_recoveries(limit: int = 10, max_pages: int = 5) -> str:
+def whoop_cycle_recoveries(limit: int = 10, start: str = "", end: str = "", max_pages: int = 20) -> str:
     """Recovery scores (HRV, RHR, SpO2, skin temp), newest first."""
-    return _guard(client.paginate, "/recovery", {"limit": min(limit, 25)}, max_pages)
+    params = {"limit": min(limit, 25)}
+    if start:
+        params["start"] = start
+    if end:
+        params["end"] = end
+    return _guard(client.paginate, "/recovery", params, max_pages)
+
+
+@mcp.tool()
+def whoop_recoveries_for_cycle(cycle_id: int) -> str:
+    """Recovery record attached to a specific cycle (numeric ID)."""
+    return _guard(client._get, f"/cycle/{cycle_id}/recovery")
+
+
+@mcp.tool()
+def whoop_sleep_for_cycle(cycle_id: int) -> str:
+    """Sleep record attached to a specific cycle (numeric ID)."""
+    return _guard(client._get, f"/cycle/{cycle_id}/sleep")
 
 
 @mcp.tool()
@@ -97,9 +129,14 @@ def whoop_sleep_by_id(sleep_id: str) -> str:
 
 
 @mcp.tool()
-def whoop_workouts(limit: int = 10, max_pages: int = 5) -> str:
+def whoop_workouts(limit: int = 10, start: str = "", end: str = "", max_pages: int = 5) -> str:
     """Workouts: sport, strain, HR, kilojoules, distance, zone durations."""
-    return _guard(client.paginate, "/activity/workout", {"limit": min(limit, 25)}, max_pages)
+    params = {"limit": min(limit, 25)}
+    if start:
+        params["start"] = start
+    if end:
+        params["end"] = end
+    return _guard(client.paginate, "/activity/workout", params, max_pages)
 
 
 @mcp.tool()
