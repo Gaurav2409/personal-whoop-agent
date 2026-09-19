@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — personal-whoop-agent</title>
+<style>
+  body { font-family: -apple-system, "Segoe UI", Roboto, sans-serif; max-width: 720px;
+         margin: 2rem auto; padding: 0 1rem; line-height: 1.6; color: #1a1a1a; }
+  h1 { font-size: 1.5rem; } h2 { font-size: 1.1rem; margin-top: 1.5rem; }
+</style>
+</head>
+<body>
+<h1>Privacy Policy — personal-whoop-agent</h1>
+<p><em>Last updated: 2026-09-19</em></p>
+
+<p>This is a <strong>personal, single-user</strong> integration that lets the app
+owner's own AI agent harnesses (e.g. Hermes, Claude) read their own WHOOP data.</p>
+
+<h2>What data is accessed</h2>
+<p>Via the WHOOP OAuth API with the scopes <code>read:profile</code>,
+<code>read:body_measurement</code>, <code>read:cycles</code>, <code>read:recovery</code>,
+<code>read:sleep</code>, <code>read:workout</code> — i.e., the owner's own profile,
+body measurements, physiological cycles/strain, recovery, sleep, and workout records.</p>
+
+<h2>How data is used</h2>
+<p>Requests are made on demand by the owner's locally running software and passed
+to the owner's locally configured AI assistant to answer questions about their own
+health and training data. Data is <strong>not</strong> sold, shared, or transferred
+to any third party. No WHOOP data is persisted beyond short-lived OAuth tokens.</p>
+
+<h2>Where tokens live</h2>
+<p>OAuth access/refresh tokens and app credentials are stored only in the owner's
+local Windows credential manager (keychain) on the owner's own machine.</p>
+
+<h2>Data deletion / revocation</h2>
+<p>The owner can revoke access at any time by running
+<code>python -m whoop_mcp --revoke</code>, by removing the app in WHOOP app
+settings, or by contacting the email registered for this app in the WHOOP
+Developer Dashboard.</p>
+
+<h2>Contact</h2>
+<p>The email listed in the WHOOP Developer Dashboard for this app.</p>
+</body>
+</html>
