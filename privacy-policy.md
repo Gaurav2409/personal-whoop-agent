@@ -1,6 +1,6 @@
 # Privacy policy: personal WHOOP integration
 
-_Last updated: 2026-10-08_
+_Last updated: 2026-10-10_
 
 This is a personal, single-user integration. Its only user is its developer, who
 is also the WHOOP member whose data it reads.
